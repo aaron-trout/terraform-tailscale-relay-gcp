@@ -26,3 +26,9 @@ variable "preemptible" {
   type        = bool
   default     = false
 }
+
+variable "instance_network_tags" {
+  description = "List of network tags to attach to the instance (Default: [])"
+  type        = list(string)
+  default     = []
+}
