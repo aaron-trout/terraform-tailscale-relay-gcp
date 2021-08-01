@@ -1,6 +1,7 @@
 #!/bin/bash -e
 
-echo "Installing Tailscale..."
+echo "Configuring Tailscale..."
+
 echo '-----BEGIN PGP PUBLIC KEY BLOCK-----
 
 mQINBF5UmbgBEADAA5mxC8EoWEf53RVdlhQJbNnQW7fctUA5yNcGUbGGGTk6XFqO
@@ -53,15 +54,21 @@ KqB6je3plIWOLSPuCJ/kR9xdFp7Qk88GCXEd0+4z/vFn4hoOr85NXFtxhS8k9GfJ
 mM/ZfUq7YmHR+Rswe0zrrCwTDdePjGMo9cHpd39jCvc=
 =AIVM
 -----END PGP PUBLIC KEY BLOCK-----
-' | sudo apt-key add -
+' | apt-key add -
 
-echo '# Tailscale packages for ubuntu focal
-deb https://pkgs.tailscale.com/stable/ubuntu focal main' | sudo tee /etc/apt/sources.list.d/tailscale.list
+echo 'deb https://pkgs.tailscale.com/stable/ubuntu focal main' > /etc/apt/sources.list.d/tailscale.list
+apt update
+echo "Tailscale APT repo configured"
 
-sudo apt update && sudo apt install -y tailscale
+apt install -y tailscale
+echo "Installed Tailscale"
 
-echo "Starting tailscale..."
-sudo tailscale up \
-    --advertise-exit-node
-    --authkey=${authkey}
+sysctl -w net.ipv4.ip_forward=1
+echo "Enabled IP Forwarding"
+
+tailscale up \
+    --advertise-exit-node \
+    --authkey=${authkey} \
     --hostname=${hostname}
+echo "Started tailscale"
+echo "DONE"
