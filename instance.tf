@@ -1,3 +1,7 @@
+resource "google_compute_address" "tailscale" {
+  name = "tailscale"
+}
+
 resource "google_compute_instance" "tailscale" {
   name                    = "tailscale"
   machine_type            = var.instance_type
@@ -13,6 +17,9 @@ resource "google_compute_instance" "tailscale" {
 
   network_interface {
     subnetwork = google_compute_subnetwork.tailscale.self_link
+    access_config {
+      nat_ip = google_compute_address.tailscale.address
+    }
   }
 
   shielded_instance_config {
