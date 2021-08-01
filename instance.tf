@@ -1,12 +1,12 @@
 resource "google_compute_instance" "tailscale" {
-  name = "tailscale"
-  machine_type = var.instance_type
+  name                    = "tailscale"
+  machine_type            = var.instance_type
   metadata_startup_script = data.template_file.startup_script.rendered
 
   boot_disk {
     initialize_params {
-      type = "pd-standard"
-      size = 40
+      type  = "pd-standard"
+      size  = 40
       image = "ubuntu-2004-lts"
     }
   }
@@ -22,10 +22,10 @@ resource "google_compute_instance" "tailscale" {
 }
 
 data "template_file" "startup_script" {
-  template = "${file("${path.module}/startup_script.sh.tpl")}"
+  template = file("${path.module}/startup_script.sh.tpl")
 
   vars = {
-    authkey = var.tailscale_auth_key
+    authkey  = var.tailscale_auth_key
     hostname = var.hostname
   }
 }
