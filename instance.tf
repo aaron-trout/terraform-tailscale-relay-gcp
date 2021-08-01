@@ -27,7 +27,8 @@ resource "google_compute_instance" "tailscale" {
   }
 
   scheduling {
-    preemptible = var.preemptible
+    preemptible       = var.preemptible
+    automatic_restart = var.preemptible ? false : true
   }
 
 }
