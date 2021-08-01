@@ -20,3 +20,9 @@ variable "hostname" {
   type        = string
   default     = "tailscale-relay"
 }
+
+variable "preemptible" {
+  description = "Use / do not use a preemptible GGE instance (Default: false)"
+  type        = bool
+  default     = false
+}

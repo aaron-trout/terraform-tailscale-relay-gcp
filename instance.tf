@@ -26,6 +26,10 @@ resource "google_compute_instance" "tailscale" {
     enable_secure_boot = true
   }
 
+  scheduling {
+    preemptible = var.preemptible
+  }
+
 }
 
 data "template_file" "startup_script" {
