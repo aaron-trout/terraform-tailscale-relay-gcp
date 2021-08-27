@@ -6,6 +6,7 @@ resource "google_compute_instance" "tailscale" {
   name                    = "tailscale"
   machine_type            = var.instance_type
   metadata_startup_script = sensitive(data.template_file.startup_script.rendered)
+  desired_status          = "RUNNING"
   tags                    = var.instance_network_tags
 
   boot_disk {
